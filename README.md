@@ -1,21 +1,11 @@
 # GrapesJsCustomPluginBundle
 
-## About
-This is a Mautic-Plugin to demonstrate the usage of dynamically added GrapesJS plugins to Mautic's editor
-(see implementation at https://github.com/Moongazer/mautic/tree/feat/grapesjs-custom-plugins).
+## About the demo-plugin
+This is a Mautic-Plugin to demonstrate how [3rd party](https://gjs.market/) or custom GrapesJS plugins can be added to Mautic's editor.
+
+You can use this plugin as skeleton to start extending and customizing the GrapeJS editor for your needs.
 
 ## Usage
-In case the proposed implementation will be merged into Mautic's core, any plugin bundle will be able to add
-custom GrapesJS plugins to the editor using the following registration object:
-```javascript
-// create a global window-object which holds the information about GrapesJS plugins
-if (!window.MauticGrapesJsPlugins) window.MauticGrapesJsPlugins = [];
+Basically any plugin bundle is able to add custom GrapesJS plugins using a global `window`-object for the registration.
 
-// add the plugin-function with a name to the window-object
-window.MauticGrapesJsPlugins.push({
-    name: 'GrapesJsCustomPlugin', // required
-    plugin: GrapesJsCustomPlugin, // required
-    context: ['page', 'email-mjml'], // optional. default is none/empty, so the plugin is always added; options: [page|email-mjml|email-html]
-    pluginOptions: { options: { test: true, hello: 'world'} } // optional
-})
-```
+Read how to do so in the official developer docs: [Creating a Plugin for GrapesJS](https://devdocs.mautic.org/en/5.x/themes/grapesjs.html#creating-a-plugin-for-grapesjs).
