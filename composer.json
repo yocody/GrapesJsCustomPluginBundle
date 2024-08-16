@@ -1,20 +1,10 @@
 {
-  "name": "mautic/grapesjs-custom-plugin",
+  "name": "mautic/grapesjs-custom-plugin-bundle",
   "description": "Test bundle to add a custom GrapesJS plugin to the Mautic Builder",
   "type": "mautic-plugin",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "install-directory-name": "GrapesJsCustomPluginBundle"
-  },
-  "autoload": {
-    "psr-4": {
-      "MauticPlugin\\GrapesJsCustomPluginBundle\\": ""
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "MauticPlugin\\GrapesJsCustomPluginBundle\\Tests\\": "Tests"
-    }
   }
 }

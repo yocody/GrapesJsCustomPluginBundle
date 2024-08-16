@@ -10,14 +10,9 @@ use Mautic\PluginBundle\Entity\Integration;
 
 class Config
 {
-    /**
-     * @var IntegrationsHelper
-     */
-    private IntegrationsHelper $integrationsHelper;
-
-    public function __construct(IntegrationsHelper $integrationsHelper)
-    {
-        $this->integrationsHelper = $integrationsHelper;
+    public function __construct(
+        private IntegrationsHelper $integrationsHelper
+    ) {
     }
 
     public function isPublished(): bool
@@ -25,14 +20,14 @@ class Config
         try {
             $integration = $this->getIntegrationEntity();
 
-            return (bool)$integration->getIsPublished();
-        } catch (IntegrationNotFoundException $e) {
+            return (bool) $integration->getIsPublished() ?: false;
+        } catch (IntegrationNotFoundException) {
             return false;
         }
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getFeatureSettings(): array
     {
@@ -40,7 +35,7 @@ class Config
             $integration = $this->getIntegrationEntity();
 
             return $integration->getFeatureSettings() ?: [];
-        } catch (IntegrationNotFoundException $e) {
+        } catch (IntegrationNotFoundException) {
             return [];
         }
     }
