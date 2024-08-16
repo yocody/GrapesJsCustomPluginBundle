@@ -9,15 +9,23 @@ use Mautic\CoreBundle\Event\CustomAssetsEvent;
 use Mautic\InstallBundle\Install\InstallService;
 use MauticPlugin\GrapesJsCustomPluginBundle\Integration\Config;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class AssetsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(
-        private Config $config,
-        private InstallService $installer,
-        private RequestStack $requestStack
-    ) {
+    /**
+     * @var Config
+     */
+    private Config $config;
+
+    /**
+     * @var InstallService
+     */
+    private InstallService $installer;
+
+    public function __construct(Config $config, InstallService $installer)
+    {
+        $this->config = $config;
+        $this->installer = $installer;
     }
 
     public static function getSubscribedEvents(): array
@@ -29,7 +37,7 @@ class AssetsSubscriber implements EventSubscriberInterface
 
     public function injectAssets(CustomAssetsEvent $assetsEvent): void
     {
-        if (!$this->installer->checkIfInstalled() || !$this->isMauticAdministrationPage()) {
+        if (!$this->installer->checkIfInstalled()) {
             return;
         }
 
@@ -37,13 +45,5 @@ class AssetsSubscriber implements EventSubscriberInterface
             $assetsEvent->addScript('plugins/GrapesJsCustomPluginBundle/Assets/dist/index.js');
             //$assetsEvent->addStylesheet('plugins/GrapesJsCustomPluginBundle/Assets/dist/index.min.css');
         }
-    }
-    
-    /**
-     * Returns true for routes that starts with /s/.
-     */
-    private function isMauticAdministrationPage(): bool
-    {
-        return preg_match('/^\/s\//', $this->requestStack->getCurrentRequest()->getPathInfo()) >= 1;
     }
 }
